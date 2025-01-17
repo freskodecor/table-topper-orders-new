@@ -7,107 +7,15 @@
   <meta name="Generator" content="Cocoa HTML Writer">
   <meta name="CocoaVersion" content="2113.65">
   <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #9ba2b1; -webkit-text-stroke: #9ba2b1}
     span.s1 {font-kerning: none}
+    span.s2 {font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+    span.s3 {font-kerning: none; color: #d65562; -webkit-text-stroke: 0px #d65562}
+    span.s4 {font-kerning: none; color: #c58853; -webkit-text-stroke: 0px #c58853}
+    span.s5 {font-kerning: none; color: #88b966; -webkit-text-stroke: 0px #88b966}
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;Table Topper Orders&lt;/title&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="styles.css" rel="stylesheet"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"&gt;&lt;/script&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Process PDF and extract data</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>async function processPDF(file) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const arrayBuffer = await file.arrayBuffer();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>let fullText = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>for (let pageNum = 1; pageNum &lt;= pdf.numPages; pageNum++) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const page = await pdf.getPage(pageNum);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const textContent = await page.getTextContent();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const pageText = textContent.items</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>.map(item =&gt; item.str)</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>.join(' ')</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>.replace(/\s+/g, ' ');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>fullText += pageText + '\n';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Extract data using your existing patterns</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const orderData = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>customerName: extractCustomerName(fullText),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>orderDate: extractOrderDate(fullText),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>shipByDate: extractShipByDate(fullText),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>tableSize: extractTableSize(fullText),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>fabric: extractFabric(fullText),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>umbrellaHole: !fullText.toLowerCase().includes('no umbrella')</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Display the extracted data</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>displayData(orderData);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return orderData;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>} catch (error) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>console.error('Error processing PDF:', error);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>alert('Error processing PDF. Please try again.');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Extract customer name</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function extractCustomerName(text) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const nameMatch = text.match(/Ship to\s+(.*?)[\d{5}|\n]/);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>return nameMatch ? nameMatch[1].trim() : '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Add other extraction functions here...</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Display extracted data</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function displayData(data) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const display = document.getElementById('dataDisplay');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display.innerHTML = `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2&gt;Extracted Data:&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Customer: ${data.customerName}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Order Date: ${data.orderDate}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Ship By: ${data.shipByDate}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Table Size: ${data.tableSize}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Fabric: ${data.fabric}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Umbrella Hole: ${data.umbrellaHole ? 'Yes' : 'No'}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Initialize</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const fileInput = document.getElementById('pdfUpload');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>fileInput.addEventListener('change', async (event) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const file = event.target.files[0];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (file &amp;&amp; file.type === 'application/pdf') {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>await processPDF(file);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body class="bg-gray-100"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-4xl mx-auto p-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white shadow-lg rounded-lg p-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-2xl font-bold mb-4"&gt;Table Topper Order Processor&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;input type="file" id="pdfUpload" accept=".pdf" class="mb-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div id="dataDisplay" class="mt-4"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span><span class="s2"> </span><span class="s1">&lt;</span><span class="s3">html</span><span class="s1">&gt;</span><span class="s2"> </span><span class="s1">&lt;</span><span class="s3">head</span><span class="s1">&gt;</span><span class="s2"> </span><span class="s1">&lt;</span><span class="s3">title</span><span class="s1">&gt;</span><span class="s2">Table Topper Orders</span><span class="s1">&lt;/</span><span class="s3">title</span><span class="s1">&gt;</span><span class="s2"> </span><span class="s1">&lt;/</span><span class="s3">head</span><span class="s1">&gt;</span><span class="s2"> </span><span class="s1">&lt;</span><span class="s3">body</span><span class="s1">&gt;</span><span class="s2"> </span><span class="s1">&lt;</span><span class="s3">h1</span><span class="s1">&gt;</span><span class="s2">Table Topper Orders</span><span class="s1">&lt;/</span><span class="s3">h1</span><span class="s1">&gt;</span><span class="s2"> </span><span class="s1">&lt;</span><span class="s3">input </span><span class="s4">type</span><span class="s1">="</span><span class="s5">file</span><span class="s1">"</span><span class="s3"> </span><span class="s4">accept</span><span class="s1">="</span><span class="s5">.pdf</span><span class="s1">"&gt;</span><span class="s2"> </span><span class="s1">&lt;/</span><span class="s3">body</span><span class="s1">&gt;</span><span class="s2"> </span><span class="s1">&lt;/</span><span class="s3">html</span><span class="s1">&gt;</span></p>
 </body>
 </html>
