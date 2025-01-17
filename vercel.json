@@ -1,29 +1,22 @@
 {
   "version": 2,
-  "buildCommand": "",
-  "outputDirectory": ".",
-  "installCommand": "",
-  "framework": null,
-  "functions": {
-    "api/*.js": {
-      "memory": 1024
-    }
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
           "key": "Content-Type",
-          "value": "text/html"
+          "value": "text/html; charset=utf-8"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
